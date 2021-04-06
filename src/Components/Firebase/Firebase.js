@@ -1,5 +1,6 @@
 import firebase from 'firebase/app';
 import "firebase/auth";
+import 'firebase/firestore';
 
 class Firebase {
   constructor() {
@@ -18,8 +19,27 @@ class Firebase {
   }
 
   signInWithGoogle = () => {
+    this.auth = firebase.auth();
+    this.firestore = firebase.firestore();
+
     const provider = new firebase.auth.GoogleAuthProvider();
-    this.auth.signInWithPopup(provider);
+    this.auth.signInWithPopup(provider)
+      .then(async (result) => {
+        console.log(result);
+        //SUCCESSFULLY LOGGED IN
+        const profile = result.additionalUserInfo.profile;
+        await this.firestore.collection('Users').doc(this.auth.currentUser.uid).set({
+          uid: this.auth.currentUser.uid,
+          name: profile.name,
+          email: profile.email,
+          picUrl: profile.picture
+        });
+
+      }).catch((error) => {
+        //ERROR DURING LOGIN
+        console.log("LOGIN ERROR ERROR ERROR ERROR");
+        console.log(error);
+      });
   }
 }
 

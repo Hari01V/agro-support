@@ -1,0 +1,30 @@
+.User{
+  max-width: 400px;
+  height: 60px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  position: relative;
+}
+.User::after{
+  content: '';
+  width: 330px;
+  height: 1px;
+  background: grey;
+  position: absolute;
+  bottom: 0;
+  right: 10px;
+}
+.image-container{
+  margin-left: 0.4rem;
+}
+.User-pic{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+.User-name{
+  padding-left: 1rem;
+  font-weight: 400;
+  font-size: 20px;
+}
