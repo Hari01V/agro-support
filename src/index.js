@@ -4,9 +4,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import Firebase from './Components/Firebase/Firebase';
+import { FirebaseContext } from './Components/Firebase/context';
+
+const firebase = new Firebase();
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <FirebaseContext.Provider value={{ firebase: firebase }}>
+      <App />
+    </FirebaseContext.Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
