@@ -16,6 +16,7 @@ class Firebase {
 
     this.auth = firebase.auth();
     this.firestore = firebase.firestore();
+    this.myChats = [];
   }
 
   signInWithGoogle = () => {
@@ -26,6 +27,7 @@ class Firebase {
     this.auth.signInWithPopup(provider)
       .then(async (result) => {
         console.log(result);
+
         //SUCCESSFULLY LOGGED IN
         const profile = result.additionalUserInfo.profile;
         await this.firestore.collection('Users').doc(this.auth.currentUser.uid).set({
@@ -35,12 +37,34 @@ class Firebase {
           picUrl: profile.picture
         });
 
+        //GET USER CHATS
+        this.getMyChats();
+
       }).catch((error) => {
         //ERROR DURING LOGIN
         console.log("LOGIN ERROR ERROR ERROR ERROR");
         console.log(error);
       });
   }
+
+  getMyChats = async () => {
+    this.myChats = [];
+    const currUserId = this.auth.currentUser.uid;
+    if (currUserId) {
+      await this.firestore.collection('Chats').get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          if (doc.data().user1 === currUserId) {
+            this.myChats.push({ docId: doc.id, otherUser: doc.data().user2 });
+          } else if (doc.data().user2 === currUserId) {
+            this.myChats.push({ docId: doc.id, otherUser: doc.data().user1 });
+          }
+        });
+        console.log("inside get my chats")
+        console.log(this.myChats);
+      });
+    }
+  }
+
 }
 
 export default Firebase;

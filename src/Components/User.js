@@ -2,10 +2,11 @@ import React, { } from 'react';
 import '../styles/User.css';
 
 function User(props) {
-  const { uid, name, email, picUrl } = props;
+  const { user, setChatUser } = props;
+  const { uid, name, email, picUrl } = user;
 
   return (
-    <div className="User">
+    <div className="User" onClick={() => setChatUser(user)}>
       <div className="image-container">
         <img src={picUrl} className="User-pic" />
       </div>

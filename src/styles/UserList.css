@@ -1,0 +1,19 @@
+.UserList{
+  background: cornflowerblue;
+  width: 400px;
+  height: 100vh;
+}
+.UserList-header{
+  height: 60px;
+  background: crimson;
+  padding: 0.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.UserList-header .User-pic{
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}

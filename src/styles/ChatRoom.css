@@ -1,0 +1,30 @@
+.ChatRoom{
+  min-width: 800px;
+  width: 100%;
+  background: cadetblue;
+  display: flex;
+  flex-direction: column;
+  padding-top: calc(0.4rem + 70px);
+  position: relative;
+}
+.ChatRoom-header{
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  background: grey;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+.User-info{
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+.options{
+  display: flex;
+  align-items: center;
+}
