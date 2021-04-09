@@ -36,7 +36,6 @@ class Firebase {
           email: profile.email,
           picUrl: profile.picture
         });
-
         //GET USER CHATS
         this.getMyChats();
 
@@ -45,6 +44,15 @@ class Firebase {
         console.log("LOGIN ERROR ERROR ERROR ERROR");
         console.log(error);
       });
+  }
+
+  createNewchat = async (chatUserId) => {
+    await this.firestore.collection('Chats').add({
+      user1: this.auth.currentUser.uid,
+      user2: chatUserId
+    });
+    console.log("NEW CHAT CREATED");
+    await this.getMyChats();
   }
 
   getMyChats = async () => {
@@ -60,9 +68,15 @@ class Firebase {
           }
         });
         console.log("inside get my chats")
-        console.log(this.myChats);
       });
     }
+  }
+
+  signOut = () => {
+    console.log("SIGNING OUT...");
+    console.log("CLEARING LOCALSTORAGE");
+    window.localStorage.clear();
+    this.auth.signOut();
   }
 
 }

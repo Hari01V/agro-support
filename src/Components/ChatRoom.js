@@ -1,49 +1,60 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import Firebase from 'firebase/app';
+
 import { FirebaseContext } from './Firebase/context';
-import ChatMsg from './ChatMsg';
 import '../styles/ChatRoom.css';
+import ChatMsgContainer from './ChatMsgContainer';
+
+import { fbConst } from '../helpers';
 
 function ChatRoom(props) {
-  const { chatUser } = props;
-
+  const { chatUser, chat } = props;
   const { firebase } = useContext(FirebaseContext);
+  const [messages, setMessages] = useState([false]);
 
-  const dummy = useRef();
-  // const messageRef = firebase.firestore.collection('messages');
-  // const query = messageRef.orderBy('createdAt').limit(25);
-  // const [messages] = useCollectionData(query, { idField: 'id' });
-  let chat = firebase.myChats.find(chat => chat.otherUser === chatUser.uid);
-  // chat has docId, otherUser
-  if (!chat) {
-    chat = {
-      docId: "CHAT_NOT_FOUND"
-    }
+  const getOurChats = async () => {
+    const tmpmessages = [];
+    fbConst.currChat = chat;
+    await firebase.firestore.collection('Chats').doc(chat.docId).collection('messages')
+      .orderBy("sentAt").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          tmpmessages.push({
+            id: doc.id,
+            data: doc.data().data,
+            sender: doc.data().sender
+          });
+        });
+      });
+    setMessages(tmpmessages);
+    // dummy.current.scrollIntoView({ behaviour: "smooth" });
   }
-  const messageRef = firebase.firestore.collection('Chats').doc(chat.docId).collection('messages');
-  const [messages] = useCollectionData(messageRef, { idField: 'id' });
+
+  if (fbConst.currChat != chat) {
+    getOurChats();
+  }
 
   const [formValue, setformValue] = useState('');
   const changeFormValue = (evt) => {
     setformValue(evt.target.value);
   }
-
   const sendMessage = async (e) => {
-    //   e.preventDefault();
-    //   if (!formValue.match(/^\s*$/)) {
-    //     const { uid } = firebase.auth.currentUser;
-    //     await messageRef.add({
-    //       text: formValue,
-    //       createdAt: Firebase.firestore.FieldValue.serverTimestamp(),
-    //       uid
-    //     })
-    //   }
-    //   setformValue('');
-
-    dummy.current.scrollIntoView({ behaviour: "smooth" });
+    e.preventDefault();
+    if (!formValue.match(/^\s*$/)) {
+      const { uid } = firebase.auth.currentUser;
+      const messageRef = firebase.firestore.collection('Chats').doc(chat.docId).collection('messages');
+      await messageRef.add({
+        sender: uid,
+        data: formValue,
+        sentAt: Firebase.firestore.Timestamp.now()
+      })
+      getOurChats();
+    }
+    setformValue('');
+    // dummy.current.scrollIntoView({ behaviour: "smooth" });
   }
 
   return (
@@ -58,12 +69,9 @@ function ChatRoom(props) {
             <MoreVertIcon />
           </div>
         </div>
-        <main>
-          <div>
-            {messages && messages.map(msg => <ChatMsg key={msg.id} message={msg.data} sender={msg.sender} />)}
-          </div>
-          <div ref={dummy}></div>
-        </main>
+        {chat ?
+          <ChatMsgContainer messages={messages} />
+          : <></>}
 
         <form onSubmit={sendMessage}>
           <input type="text" value={formValue} onChange={changeFormValue} />

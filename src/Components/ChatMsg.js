@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { FirebaseContext } from './Firebase/context';
 
+import '../styles/ChatMsg.css';
+
 function ChatMsg(props) {
   const { firebase } = useContext(FirebaseContext);
 

@@ -8,6 +8,15 @@ import Firebase from './Components/Firebase/Firebase';
 import { FirebaseContext } from './Components/Firebase/context';
 
 const firebase = new Firebase();
+firebase.auth.onAuthStateChanged(user => {
+  if (user != null) {
+    console.log("SOMEONE LOGGED IN");
+    firebase.getMyChats();
+    console.log(user);
+  } else {
+    console.log("NO ONE LOGGED IN");
+  }
+})
 
 ReactDOM.render(
   <React.StrictMode>

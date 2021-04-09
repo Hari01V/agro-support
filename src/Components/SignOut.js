@@ -5,7 +5,7 @@ function SignOut() {
   const { firebase } = useContext(FirebaseContext);
 
   return firebase.auth.currentUser && (
-    <button onClick={() => firebase.auth.signOut()}>Sign Out</button>
+    <button onClick={firebase.signOut}>Sign Out</button>
   )
 }
 
