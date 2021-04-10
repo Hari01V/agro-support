@@ -1,0 +1,131 @@
+.Landing{
+  width: 100%;
+  /* background-color: #7ee8fa; */
+  /* background-image: linear-gradient(315deg, #6cc9d9 0%, #6bd15f 74%); */
+  background-image: url('../images/Pattern-Randomized.svg');
+}
+.Landing-navbar{
+  height: 100px;
+}
+
+.main-container{
+  min-height: 650px;
+  background-image: url('../images/farm.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(1px);
+  position: relative;
+}
+.main-container::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.46);
+}
+
+.jumbotron{
+  color: white;
+  width: 550px;
+  text-align: center;
+  padding: 1rem 3rem;
+  margin: 200px 0;
+  z-index: 5;
+}
+.jumbotron h1{
+  margin: 0;
+  font-size: 30pt;
+  font-weight: 700;
+}
+.highlight{
+  color: #6cbe03;
+}
+
+.Card-container{
+  position: relative;
+  bottom: 100px;
+  z-index: 2;
+}
+.card{
+  color: white;
+	font-family: 'Heebo', Helvetica, Arial, sans-serif;
+  width: 300px;
+  margin: 0 3rem;
+  padding: 2rem 1rem;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.56);
+  border-radius: 30px;
+  overflow: hidden;
+}
+.filter{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../images/plant.jpg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  z-index: -1;
+}
+.card h2{
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: 1px;
+  z-index: 2;
+}
+.card .highlight{
+  color: #6aaf08;
+  font-size: 23pt;
+  font-family: cursive;
+}
+.card p{
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+.fancy-button {
+	display: inline-block;
+  padding: 4px 1rem;
+	margin: 20px;
+	font-family: 'Heebo', Helvetica, Arial, sans-serif;
+	font-weight: 500;
+	font-size: 16px;
+	letter-spacing: 0.07em;
+	text-transform: uppercase;
+	line-height: 24px;
+	color: #ffffff;
+	position: relative;
+  background: linear-gradient(180deg, #fa7e29 0%, #F6682F 80%, #F6682F 100%);
+  border-radius: 30px;
+}
+.fancy-button i {
+  margin-top: -2px;
+  font-size: 1.265em;
+  vertical-align: middle;
+}
+.fancy-button span {
+  display: inline-block;
+  padding: 16px 20px;
+  border-radius: 50em;
+  position: relative;
+  z-index: 2;
+  will-change: transform, filter;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease-out;
+}
+.fancy-button:hover {
+  color: #ffffff;
+}
+.fancy-button:hover span{
+  filter: brightness(.9) contrast(1.2);
+  transform: scale(0.96);
+}
+
+.footer{
+  height: 50px;
+}
