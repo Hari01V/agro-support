@@ -1,0 +1,33 @@
+.ChatMsgContainer{
+  height: 100%;
+  position: relative;
+}
+.ChatMsgs{
+  display: flex;
+  flex-direction: column;
+  padding: 2px 2rem;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow-y: scroll;
+}
+.ChatMsgs::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+.ChatMsgs::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+.ChatMsgs::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+.ChatMsgs::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}

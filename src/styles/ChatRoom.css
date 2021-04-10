@@ -1,11 +1,12 @@
 .ChatRoom{
   min-width: 800px;
   width: 100%;
-  background: cadetblue;
+  height: 100%;
+  background: #fff;
   display: flex;
   flex-direction: column;
-  padding-top: calc(0.4rem + 70px);
   position: relative;
+  background-image: url('../images/Confetti-Doodles.svg');
 }
 .ChatRoom-header{
   height: 60px;
@@ -13,7 +14,8 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.4rem 1rem;
-  background: grey;
+  margin-left: 1px;
+  background: #f0f0f0;
   position: absolute;
   top: 0;
   left: 0;
@@ -27,4 +29,47 @@
 .options{
   display: flex;
   align-items: center;
+}
+
+
+.ChatMsg-container{
+  height: 100%;
+  position: relative;
+  margin-top: calc(0.4rem + 68px);
+  margin-bottom: calc(0.4rem + 70px);
+}
+.form-container{
+  height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 1rem;
+  background: #f0f0f0;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+.formInput{
+  min-height: 20px;
+  line-height: 20px;
+  font-size: 15px;
+  /* background: #33383b; */
+  background: #fff;
+  display: flex;
+  flex-grow: 1;
+  padding: 9px 12px 11px;
+  margin: 5px 10px;
+  border-radius: 21px;
+  border: none;
+  outline: none;
+}
+.sendBtn{
+  color: #919191;
+  background: transparent;
+  padding: 0.1rem;
+  margin: 0 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
 }

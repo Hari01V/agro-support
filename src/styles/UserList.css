@@ -1,11 +1,11 @@
 .UserList{
-  background: cornflowerblue;
+  background: #f8f9fa;
   width: 400px;
   height: 100vh;
 }
 .UserList-header{
   height: 60px;
-  background: crimson;
+  background: #f0f0f0;
   padding: 0.4rem;
   display: flex;
   justify-content: space-between;

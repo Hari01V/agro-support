@@ -1,0 +1,19 @@
+.message{
+  background: #f8f9fa;
+  width: fit-content;
+  max-width: 600px;
+  font-size: 16px;
+  padding: 4px 16px;
+  margin: 0.2rem 2rem;
+  border-radius: 8px;
+}
+.sent{
+  background: #dcf8c6;
+  text-align: right;
+  align-self: flex-end;
+  border-top-right-radius: 0px;
+}
+.recieved{
+  text-align: left;
+  border-top-left-radius: 0px;
+}

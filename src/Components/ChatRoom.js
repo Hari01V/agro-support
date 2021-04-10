@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef, useEffect } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import SendRoundedIcon from '@material-ui/icons/SendRounded';
 
 import Firebase from 'firebase/app';
 
@@ -14,10 +15,9 @@ import { fbConst } from '../helpers';
 function ChatRoom(props) {
   const { chatUser, chat } = props;
   const { firebase } = useContext(FirebaseContext);
-  const [messages, setMessages] = useState([false]);
 
-  const getOurChats = async () => {
-    const tmpmessages = [];
+  const getOurMessages = async () => {
+    let tmpmessages = [];
     fbConst.currChat = chat;
     await firebase.firestore.collection('Chats').doc(chat.docId).collection('messages')
       .orderBy("sentAt").get().then((querySnapshot) => {
@@ -29,12 +29,22 @@ function ChatRoom(props) {
           });
         });
       });
-    setMessages(tmpmessages);
-    // dummy.current.scrollIntoView({ behaviour: "smooth" });
+    window.localStorage.setItem(`${chat.docId}`, JSON.stringify({ msgs: tmpmessages }));
   }
 
+  const getLocalMsg = () => {
+    const localMsg = JSON.parse(window.localStorage.getItem(`${chat.docId}`));
+    return localMsg ? localMsg.msgs : [];
+  }
+
+  let localMessages;
   if (fbConst.currChat != chat) {
-    getOurChats();
+    localMessages = JSON.parse(window.localStorage.getItem(`${chat.docId}`));
+    if (localMessages) {
+      fbConst.currChat = chat;
+    } else {
+      getOurMessages();
+    }
   }
 
   const [formValue, setformValue] = useState('');
@@ -50,11 +60,19 @@ function ChatRoom(props) {
         sender: uid,
         data: formValue,
         sentAt: Firebase.firestore.Timestamp.now()
-      })
-      getOurChats();
+      }).then((docRef) => {
+        //UPDATE THE LOCALSTORAGE
+        console.log("UPDATING LOCAL STORAGE!");
+        const localMsg = JSON.parse(window.localStorage.getItem(`${chat.docId}`));
+        localMsg.msgs.push({ data: formValue, sender: uid });
+        window.localStorage.setItem(`${chat.docId}`, JSON.stringify({ msgs: localMsg.msgs }));
+      }).catch((error) => {
+        //RESEND THE MSG OR INTIMATE ERROR MSG!
+        console.log("ERROR: MESSAGE COULD'NT BE SENT");
+        console.log(error);
+      });
     }
     setformValue('');
-    // dummy.current.scrollIntoView({ behaviour: "smooth" });
   }
 
   return (
@@ -69,13 +87,15 @@ function ChatRoom(props) {
             <MoreVertIcon />
           </div>
         </div>
-        {chat ?
-          <ChatMsgContainer messages={messages} />
-          : <></>}
-
-        <form onSubmit={sendMessage}>
-          <input type="text" value={formValue} onChange={changeFormValue} />
-          <button type="submit">Send</button>
+        <div className="ChatMsg-container">
+          {chat ?
+            <ChatMsgContainer localMessages={getLocalMsg()} />
+            : <></>}
+        </div>
+        <form onSubmit={sendMessage} className="form-container">
+          <input type="text" className="formInput"
+            value={formValue} onChange={changeFormValue} placeholder="Type a message" />
+          <button type="submit" className="sendBtn"><SendRoundedIcon fontSize="large" /></button>
         </form>
       </div>) :
       (<>

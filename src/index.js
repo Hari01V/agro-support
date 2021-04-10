@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
 
 import Firebase from './Components/Firebase/Firebase';
 import { FirebaseContext } from './Components/Firebase/context';
@@ -20,9 +21,11 @@ firebase.auth.onAuthStateChanged(user => {
 
 ReactDOM.render(
   <React.StrictMode>
-    <FirebaseContext.Provider value={{ firebase: firebase }}>
-      <App />
-    </FirebaseContext.Provider>
+    <BrowserRouter>
+      <FirebaseContext.Provider value={{ firebase: firebase }}>
+        <App />
+      </FirebaseContext.Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );
